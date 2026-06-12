@@ -15,6 +15,11 @@ export class RegisterUserDto {
   @IsNotEmpty()
   lastName: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/\S/, { message: 'Flat number must not be blank' })
+  flatNumber: string;
+
   @IsEmail()
   email: string;
 

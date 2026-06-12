@@ -1,8 +1,9 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { CreateUsersTable1775916000000 } from './migrations/1775916000000-CreateUsersTable';
+import { AddFlatNumberToUsersTable1775916100000 } from './migrations/1775916100000-AddFlatNumberToUsersTable';
 
-ConfigModule.forRoot({
+void ConfigModule.forRoot({
   envFilePath: '.env',
 });
 
@@ -16,5 +17,8 @@ export const AppDataSource = new DataSource({
   password: configService.getOrThrow<string>('MYSQL_PASSWORD'),
   database: configService.getOrThrow<string>('MYSQL_DATABASE'),
   entities: [],
-  migrations: [CreateUsersTable1775916000000],
+  migrations: [
+    CreateUsersTable1775916000000,
+    AddFlatNumberToUsersTable1775916100000,
+  ],
 });

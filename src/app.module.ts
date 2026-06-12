@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CreateUsersTable1775916000000 } from './database/migrations/1775916000000-CreateUsersTable';
+import { AddFlatNumberToUsersTable1775916100000 } from './database/migrations/1775916100000-AddFlatNumberToUsersTable';
 import { User } from './users/user.entity';
 
 @Module({
@@ -14,7 +15,9 @@ import { User } from './users/user.entity';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        const mysqlPort = Number(configService.getOrThrow<string>('MYSQL_PORT'));
+        const mysqlPort = Number(
+          configService.getOrThrow<string>('MYSQL_PORT'),
+        );
 
         return {
           type: 'mysql',
@@ -24,7 +27,10 @@ import { User } from './users/user.entity';
           password: configService.getOrThrow<string>('MYSQL_PASSWORD'),
           database: configService.getOrThrow<string>('MYSQL_DATABASE'),
           entities: [User],
-          migrations: [CreateUsersTable1775916000000],
+          migrations: [
+            CreateUsersTable1775916000000,
+            AddFlatNumberToUsersTable1775916100000,
+          ],
           synchronize: false,
           migrationsRun: true,
         };

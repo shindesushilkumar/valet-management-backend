@@ -26,7 +26,7 @@ export class AuthService {
     private readonly usersRepository: Repository<User>,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async register(dto: RegisterUserDto): Promise<UserResponseDto> {
     try {
@@ -38,6 +38,7 @@ export class AuthService {
       const user = this.usersRepository.create({
         firstName: dto.firstName.trim(),
         lastName: dto.lastName.trim(),
+        flatNumber: dto.flatNumber.trim(),
         email: dto.email.toLowerCase(),
         passwordHash,
       });
@@ -96,6 +97,7 @@ export class AuthService {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      flatNumber: user.flatNumber,
     };
   }
 
@@ -117,6 +119,9 @@ export class AuthService {
       sqlMessage?: string;
     };
 
-    return code === 'ER_DUP_ENTRY' || (errno === 1062 && sqlMessage?.includes('UQ_users_email'));
+    return (
+      code === 'ER_DUP_ENTRY' ||
+      (errno === 1062 && sqlMessage?.includes('UQ_users_email'))
+    );
   }
 }

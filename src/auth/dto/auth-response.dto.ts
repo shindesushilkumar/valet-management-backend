@@ -3,6 +3,7 @@ export class UserResponseDto {
   email: string;
   firstName: string;
   lastName: string;
+  flatNumber: string;
 }
 
 export class AuthenticatedUserDto {

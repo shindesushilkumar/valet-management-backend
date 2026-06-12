@@ -17,6 +17,9 @@ export class User {
   @Column({ name: 'last_name', nullable: false })
   lastName: string;
 
+  @Column({ name: 'flat_number', nullable: false })
+  flatNumber: string;
+
   @Column({ unique: true, nullable: false })
   email: string;
 

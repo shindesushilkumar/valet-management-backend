@@ -104,6 +104,7 @@ describe('AuthController (e2e)', () => {
       email: 'customer@example.com',
       firstName: 'Customer',
       lastName: 'User',
+      flatNumber: 'A-101',
     });
 
     return request(getHttpServer())
@@ -111,18 +112,23 @@ describe('AuthController (e2e)', () => {
       .send({
         firstName: 'Customer',
         lastName: 'User',
+        flatNumber: 'A-101',
         email: 'Customer@example.com',
         password: 'SecretPass1!',
       })
       .expect(201)
       .expect((response) => {
         expect(response.body).toEqual({
-        id: 1,
-        email: 'customer@example.com',
-      });
+          id: 1,
+          email: 'customer@example.com',
+          firstName: 'Customer',
+          lastName: 'User',
+          flatNumber: 'A-101',
+        });
         expect(authService.register).toHaveBeenCalledWith({
           firstName: 'Customer',
           lastName: 'User',
+          flatNumber: 'A-101',
           email: 'Customer@example.com',
           password: 'SecretPass1!',
         });
@@ -139,10 +145,36 @@ describe('AuthController (e2e)', () => {
       .send({
         firstName: 'Customer',
         lastName: 'User',
+        flatNumber: 'A-101',
         email: 'customer@example.com',
         password: 'SecretPass1!',
       })
       .expect(409);
+  });
+
+  it('POST /auth/register returns 400 for missing flat number', () => {
+    return request(getHttpServer())
+      .post('/auth/register')
+      .send({
+        firstName: 'Customer',
+        lastName: 'User',
+        email: 'customer@example.com',
+        password: 'SecretPass1!',
+      })
+      .expect(400);
+  });
+
+  it('POST /auth/register returns 400 for empty flat number', () => {
+    return request(getHttpServer())
+      .post('/auth/register')
+      .send({
+        firstName: 'Customer',
+        lastName: 'User',
+        flatNumber: '   ',
+        email: 'customer@example.com',
+        password: 'SecretPass1!',
+      })
+      .expect(400);
   });
 
   it('POST /auth/register returns 400 for invalid payload', () => {
@@ -151,6 +183,7 @@ describe('AuthController (e2e)', () => {
       .send({
         firstName: 'Customer',
         lastName: 'User',
+        flatNumber: 'A-101',
         email: 'not-an-email',
         password: 'weak',
       })
@@ -177,9 +210,10 @@ describe('AuthController (e2e)', () => {
         expect(response.body).toEqual({
           accessToken: 'access-token',
           user: {
-        id: 1,
-        email: 'customer@example.com',
-      });
+            id: 1,
+            email: 'customer@example.com',
+          },
+        });
         expect(authService.login).toHaveBeenCalledWith({
           email: 'Customer@example.com',
           password: 'SecretPass1!',

@@ -1,8 +1,4 @@
-## Purpose
-
-[TODO: Add description of this capability's purpose and responsibility.]
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Register user with email and password
 The system SHALL create a new user account when a client submits a valid registration request containing a unique email address, a password that satisfies the configured password policy, and a non-empty flat number. The system MUST store only a bcrypt password hash, MUST persist the flat number, and MUST return the created user identity without exposing the password.

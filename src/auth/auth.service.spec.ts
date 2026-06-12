@@ -68,6 +68,7 @@ describe('AuthService', () => {
     const result = await service.register({
       firstName: 'Customer',
       lastName: 'User',
+      flatNumber: ' A-101 ',
       email: 'customer@example.com',
       password: 'SecretPass1!',
     });
@@ -77,12 +78,14 @@ describe('AuthService', () => {
       email: 'customer@example.com',
       firstName: 'Customer',
       lastName: 'User',
+      flatNumber: 'A-101',
     });
     expect(repository.create).toHaveBeenCalledWith(
       expect.objectContaining({
         email: 'customer@example.com',
         firstName: 'Customer',
         lastName: 'User',
+        flatNumber: 'A-101',
       }),
     );
 
@@ -109,6 +112,7 @@ describe('AuthService', () => {
       service.register({
         firstName: 'Customer',
         lastName: 'User',
+        flatNumber: 'A-101',
         email: 'customer@example.com',
         password: 'SecretPass1!',
       }),
