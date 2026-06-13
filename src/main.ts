@@ -3,7 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
-const DEFAULT_CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://localhost:5173'];
+const DEFAULT_CORS_ALLOWED_ORIGINS = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+];
 
 function parseAllowedOrigins(configService: ConfigService): string[] {
   const configuredOrigins = configService.get<string>('CORS_ALLOWED_ORIGINS');

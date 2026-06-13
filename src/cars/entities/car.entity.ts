@@ -15,8 +15,17 @@ export class Car {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'car_number', nullable: false })
-  carNumber: string;
+  @Column({ name: 'car_make', nullable: false })
+  make: string;
+
+  @Column({ name: 'car_model', nullable: false })
+  model: string;
+
+  @Column({ name: 'registration_number', nullable: false })
+  registrationNumber: string;
+
+  @Column({ name: 'color', nullable: false })
+  color: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })

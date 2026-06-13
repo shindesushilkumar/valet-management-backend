@@ -16,7 +16,10 @@ export class CarsService {
 
   async create(dto: CreateCarDto, userId: number): Promise<CarResponseDto> {
     const car = this.carsRepository.create({
-      carNumber: dto.carNumber.trim(),
+      make: dto.make.trim(),
+      model: dto.model.trim(),
+      registrationNumber: dto.registrationNumber.trim(),
+      color: dto.color.trim(),
       user: { id: userId } as User,
     });
     const savedCar = await this.carsRepository.save(car);
@@ -47,8 +50,17 @@ export class CarsService {
     if (!car) {
       return null;
     }
-    if (dto.carNumber !== undefined) {
-      car.carNumber = dto.carNumber.trim();
+    if (dto.make !== undefined) {
+      car.make = dto.make.trim();
+    }
+    if (dto.model !== undefined) {
+      car.model = dto.model.trim();
+    }
+    if (dto.registrationNumber !== undefined) {
+      car.registrationNumber = dto.registrationNumber.trim();
+    }
+    if (dto.color !== undefined) {
+      car.color = dto.color.trim();
     }
     await this.carsRepository.save(car);
     return this.toResponse(car);
@@ -68,7 +80,10 @@ export class CarsService {
   private toResponse(car: Car): CarResponseDto {
     return {
       id: car.id,
-      carNumber: car.carNumber,
+      make: car.make,
+      model: car.model,
+      registrationNumber: car.registrationNumber,
+      color: car.color,
       userId: car.user.id,
       createdAt: car.createdAt,
       updatedAt: car.updatedAt,

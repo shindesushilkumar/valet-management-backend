@@ -4,5 +4,20 @@ export class UpdateCarDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  carNumber?: string;
+  make?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  model?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  registrationNumber?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  color?: string;
 }

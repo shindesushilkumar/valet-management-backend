@@ -1,8 +1,4 @@
-## Purpose
-
-Allow authenticated users to manage their car records.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Register a car for authenticated user
 The system SHALL allow an authenticated user to register a new car by providing make, model, registration number, and color. The system MUST associate the car with the authenticated user and return the created car record with its ID.

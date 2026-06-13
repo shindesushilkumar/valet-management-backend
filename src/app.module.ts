@@ -9,6 +9,7 @@ import { CarsModule } from './cars/cars.module';
 import { CreateUsersTable1775916000000 } from './database/migrations/1775916000000-CreateUsersTable';
 import { AddFlatNumberToUsersTable1775916100000 } from './database/migrations/1775916100000-AddFlatNumberToUsersTable';
 import { CreateCarsTable1775917000000 } from './database/migrations/1775917000000-CreateCarsTable';
+import { UpdateCarsTableFields1775918000000 } from './database/migrations/1775918000000-UpdateCarsTableFields';
 import { User } from './users/user.entity';
 import { Car } from './cars/entities/car.entity';
 
@@ -34,6 +35,7 @@ import { Car } from './cars/entities/car.entity';
             CreateUsersTable1775916000000,
             AddFlatNumberToUsersTable1775916100000,
             CreateCarsTable1775917000000,
+            UpdateCarsTableFields1775918000000,
           ],
           synchronize: false,
           migrationsRun: true,
