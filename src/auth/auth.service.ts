@@ -17,6 +17,7 @@ import { User } from '../users/user.entity';
 export interface JwtPayload {
   sub: string;
   email: string;
+  role: string;
 }
 
 @Injectable()
@@ -41,6 +42,7 @@ export class AuthService {
         flatNumber: dto.flatNumber.trim(),
         email: dto.email.toLowerCase(),
         passwordHash,
+        role: 'owner',
       });
 
       const savedUser = await this.usersRepository.save(user);
@@ -81,6 +83,7 @@ export class AuthService {
       {
         sub: String(user.id),
         email: user.email,
+        role: user.role,
       },
       signOptions,
     );
@@ -98,13 +101,19 @@ export class AuthService {
       firstName: user.firstName,
       lastName: user.lastName,
       flatNumber: user.flatNumber,
+      role: user.role,
     };
   }
 
-  private toAuthenticatedUser(user: User): { id: number; email: string } {
+  private toAuthenticatedUser(user: User): {
+    id: number;
+    email: string;
+    role: string;
+  } {
     return {
       id: user.id,
       email: user.email,
+      role: user.role,
     };
   }
 

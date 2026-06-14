@@ -6,10 +6,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CarsModule } from './cars/cars.module';
+import { AdminModule } from './admin/admin.module';
 import { CreateUsersTable1775916000000 } from './database/migrations/1775916000000-CreateUsersTable';
 import { AddFlatNumberToUsersTable1775916100000 } from './database/migrations/1775916100000-AddFlatNumberToUsersTable';
 import { CreateCarsTable1775917000000 } from './database/migrations/1775917000000-CreateCarsTable';
 import { UpdateCarsTableFields1775918000000 } from './database/migrations/1775918000000-UpdateCarsTableFields';
+import { AddRoleToUsersTable1776425474000 } from './database/migrations/1776425474000-AddRoleToUsersTable';
 import { User } from './users/user.entity';
 import { Car } from './cars/entities/car.entity';
 
@@ -36,6 +38,7 @@ import { Car } from './cars/entities/car.entity';
             AddFlatNumberToUsersTable1775916100000,
             CreateCarsTable1775917000000,
             UpdateCarsTableFields1775918000000,
+            AddRoleToUsersTable1776425474000,
           ],
           synchronize: false,
           migrationsRun: true,
@@ -45,6 +48,7 @@ import { Car } from './cars/entities/car.entity';
     }),
     AuthModule,
     CarsModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [

@@ -105,6 +105,7 @@ describe('AuthController (e2e)', () => {
       firstName: 'Customer',
       lastName: 'User',
       flatNumber: 'A-101',
+      role: 'owner',
     });
 
     return request(getHttpServer())
@@ -124,6 +125,7 @@ describe('AuthController (e2e)', () => {
           firstName: 'Customer',
           lastName: 'User',
           flatNumber: 'A-101',
+          role: 'owner',
         });
         expect(authService.register).toHaveBeenCalledWith({
           firstName: 'Customer',
@@ -196,6 +198,7 @@ describe('AuthController (e2e)', () => {
       user: {
         id: 1,
         email: 'customer@example.com',
+        role: 'owner',
       },
     });
 
@@ -212,6 +215,7 @@ describe('AuthController (e2e)', () => {
           user: {
             id: 1,
             email: 'customer@example.com',
+            role: 'owner',
           },
         });
         expect(authService.login).toHaveBeenCalledWith({

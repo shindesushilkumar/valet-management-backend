@@ -14,13 +14,19 @@ export class CarsService {
     private readonly carsRepository: Repository<Car>,
   ) {}
 
-  async create(dto: CreateCarDto, userId: number): Promise<CarResponseDto> {
+  async create(
+    dto: CreateCarDto,
+    user: { id: number; role: string },
+  ): Promise<CarResponseDto> {
+    if (user.role === 'driver') {
+      throw new Error('Forbidden');
+    }
     const car = this.carsRepository.create({
       make: dto.make.trim(),
       model: dto.model.trim(),
       registrationNumber: dto.registrationNumber.trim(),
       color: dto.color.trim(),
-      user: { id: userId } as User,
+      user: { id: user.id } as User,
     });
     const savedCar = await this.carsRepository.save(car);
     const carWithUser = await this.carsRepository.findOne({
@@ -30,9 +36,15 @@ export class CarsService {
     return this.toResponse(carWithUser!);
   }
 
-  async findAll(userId: number): Promise<CarResponseDto[]> {
+  async findAll(user: { id: number; role: string }): Promise<CarResponseDto[]> {
+    if (user.role === 'admin') {
+      const cars = await this.carsRepository.find({
+        relations: { user: true },
+      });
+      return cars.map((car) => this.toResponse(car));
+    }
     const cars = await this.carsRepository.find({
-      where: { user: { id: userId } },
+      where: { user: { id: user.id } },
       relations: { user: true },
     });
     return cars.map((car) => this.toResponse(car));
@@ -41,13 +53,19 @@ export class CarsService {
   async update(
     id: number,
     dto: UpdateCarDto,
-    userId: number,
+    user: { id: number; role: string },
   ): Promise<CarResponseDto | null> {
+    if (user.role === 'driver') {
+      throw new Error('Forbidden');
+    }
     const car = await this.carsRepository.findOne({
-      where: { id, user: { id: userId } },
+      where: { id },
       relations: { user: true },
     });
     if (!car) {
+      return null;
+    }
+    if (user.role !== 'admin' && car.user.id !== user.id) {
       return null;
     }
     if (dto.make !== undefined) {
@@ -66,11 +84,20 @@ export class CarsService {
     return this.toResponse(car);
   }
 
-  async remove(id: number, userId: number): Promise<boolean> {
+  async remove(
+    id: number,
+    user: { id: number; role: string },
+  ): Promise<boolean> {
+    if (user.role === 'driver') {
+      throw new Error('Forbidden');
+    }
     const car = await this.carsRepository.findOne({
-      where: { id, user: { id: userId } },
+      where: { id },
     });
     if (!car) {
+      return false;
+    }
+    if (user.role !== 'admin' && car.user.id !== user.id) {
       return false;
     }
     await this.carsRepository.softDelete(id);

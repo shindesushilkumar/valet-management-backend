@@ -26,6 +26,13 @@ export class User {
   @Column({ name: 'password_hash', nullable: false })
   passwordHash: string;
 
+  @Column({
+    type: 'enum',
+    enum: ['owner', 'driver', 'admin'],
+    default: 'owner',
+  })
+  role: string;
+
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
   createdAt: Date;
 

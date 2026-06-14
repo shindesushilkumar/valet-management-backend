@@ -61,6 +61,7 @@ describe('AuthService', () => {
           ...user,
           id: 1,
           passwordHash: user.passwordHash as string,
+          role: 'owner',
         }) as User,
     );
     repository.save.mockImplementation((user) => Promise.resolve(user));
@@ -79,6 +80,7 @@ describe('AuthService', () => {
       firstName: 'Customer',
       lastName: 'User',
       flatNumber: 'A-101',
+      role: 'owner',
     });
     expect(repository.create).toHaveBeenCalledWith(
       expect.objectContaining({
